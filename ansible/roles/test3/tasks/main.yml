@@ -1,0 +1,38 @@
+---
+- name: create src_directory
+  file:
+    dest: "/opt/{{ item }}"
+    state: directory
+  loop:
+    - "docker-{{ envv }}"
+    - "docker-{{ envv }}/wwwroot"
+    - "docker-{{ envv }}/nginx"
+
+- name: create network
+  docker_network:
+    name: "{{ env[envv].net_name }}"
+
+- name: docker-compose
+  template:
+    src: docker-compose.yml.j2
+    dest: "/opt/docker-{{ envv }}/docker-compose.yml"
+
+- name: Tear down existing services
+  docker_compose:
+    project_src: "/opt/docker-{{ envv }}"
+    state: present
+
+- import_tasks: rsync.yml
+  when: update == "yes"
+
+- import_tasks: nginx.yml
+  when: update == "yes"
+
+- name: create src_directory
+  file:
+    dest: "{{ dest }}"
+    state: directory
+    owner: "{{ u_user }}"
+    group: "{{ g_user }}"
+    mode: '0644'
+    recurse: yes

@@ -1,0 +1,17 @@
+---
+env:
+  prd:
+    name: 'prd'
+    port:
+      http: 80
+      https: 443
+    net_name: "mynet-prd"
+    domain: "_"
+
+  uat:
+    name: 'uat'
+    port:
+      http: 1080
+      https: 1443
+    net_name: "mynet-uat"
+    domain: "_"

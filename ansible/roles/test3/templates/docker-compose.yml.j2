@@ -1,0 +1,25 @@
+version: "3"
+services:
+  "nginx_{{ envv }}":
+    restart: always
+    image: nginx:{{ image_tag | default('latest') }}
+    container_name: "nginx_{{ envv }}"
+    networks:
+      - "{{ env[envv].net_name }}"
+    ports:
+      - "{{ env[envv].port.http }}:80"
+      - "{{ env[envv].port.https }}:443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./wwwroot:/wwwroot
+  "php74_{{ envv }}":
+    image: php:7.4.3-fpm
+    container_name: "php74_{{ envv }}"
+    restart: always
+    networks:
+      - "{{ env[envv].net_name }}"
+    volumes:
+      - ./wwwroot:/wwwroot
+networks:
+  "{{ env[envv].net_name }}":
+    external: true

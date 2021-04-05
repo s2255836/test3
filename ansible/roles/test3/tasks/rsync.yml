@@ -1,0 +1,8 @@
+---
+- name: sync nginx.conf and code
+  synchronize:
+    src: "{{ workspace }}/"
+    dest: "{{ dest }}/"
+    rsync_opts:
+      - "--exclude=.git"
+      - "--exclude=ansible"

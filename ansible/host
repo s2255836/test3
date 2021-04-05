@@ -1,0 +1,6 @@
+[all:vars]
+u_user=brian850506
+g_user=brian850506
+
+[server]
+35.206.230.140

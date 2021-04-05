@@ -1,0 +1,11 @@
+---
+- hosts: server
+  gather_facts: False
+  serial: 1
+  become: yes
+  vars:
+    envv: "uat"
+    dest: "/opt/docker-{{ envv }}"
+    workspace: "{{ src_path }}"
+  roles:
+    - roles/test3
