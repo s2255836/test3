@@ -3,9 +3,7 @@
   template:
     src: nginx.conf.j2
     dest: "{{ dest }}/nginx/{{ envv }}.conf"
-    mode: 0644
-    owner: "{{ u_user }}"
-    group: "{{ g_user }}"
+    mode: "0644"
 
 - name: nginx test
   command: docker-compose exec nginx_{{ envv }} nginx -t

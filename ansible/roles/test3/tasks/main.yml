@@ -3,6 +3,7 @@
   file:
     dest: "/opt/{{ item }}"
     state: directory
+    mode: "0644"
   loop:
     - "docker-{{ envv }}"
     - "docker-{{ envv }}/wwwroot"
@@ -16,6 +17,7 @@
   template:
     src: docker-compose.yml.j2
     dest: "/opt/docker-{{ envv }}/docker-compose.yml"
+    mode: "0644"
 
 - name: Tear down existing services
   docker_compose:
@@ -34,5 +36,5 @@
     state: directory
     owner: "{{ u_user }}"
     group: "{{ g_user }}"
-    mode: '0644'
+    mode: "0644"
     recurse: yes
